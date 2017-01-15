@@ -22,7 +22,7 @@ class KinectPose():
             self.positions[name]['x'] = positions[names.index(name)].x
             self.positions[name]['y'] = positions[names.index(name)].y
             self.positions[name]['z'] = positions[names.index(name)].z
-        self.check_conditions()
+        # self.check_conditions()
 
     def check_conditions(self):
         positions = self.positions
