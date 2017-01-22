@@ -21,5 +21,6 @@ def kinect_listener():
     rospy.Subscriber("skeleton", Skeleton, callback)
     rospy.spin()
 
+
 print("rinat")
 l = kinect_listener()

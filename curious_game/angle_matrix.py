@@ -81,10 +81,8 @@ class AngleMatrix:
             robot_str += str(ang) + ','
         robot_str = robot_str[:-1] + ';'
         robot_str += '0.2'
-        print(robot_str)
-        # self.pub.publish(robot_str)
-
-
+        # print(robot_str)
+        self.pub.publish(robot_str)
 
 angle_matrix = AngleMatrix()
 angle_matrix.start()
