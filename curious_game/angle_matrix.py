@@ -44,8 +44,29 @@ class AngleMatrix:
         self.robot_angles = np.dot(self.matrix, self.skeleton_angles)
         # safety!
         # Matan: take angles from website. don't allow more than max-2 degrees.
-        # self.robot_angles[0] = np.max(self.robot_angles[0], )
+        self.robot_angles[0] = np.maximum(self.robot_angles[0],-2.0850)
+        self.robot_angles[0] = np.minimum(self.robot_angles[0], 2.0850)
 
+        self.robot_angles[1] = np.maximum(self.robot_angles[1],-0.3140)
+        self.robot_angles[1] = np.minimum(self.robot_angles[1], 1.3260)
+
+        self.robot_angles[2] = np.maximum(self.robot_angles[2],-2.0850)
+        self.robot_angles[2] = np.minimum(self.robot_angles[2], 2.0850)
+
+        self.robot_angles[3] = np.maximum(self.robot_angles[3],-1.5440)
+        self.robot_angles[3] = np.minimum(self.robot_angles[3],-0.0340)
+
+        self.robot_angles[4] = np.maximum(self.robot_angles[4],-2.0850)
+        self.robot_angles[4] = np.minimum(self.robot_angles[4], 2.0850)
+
+        self.robot_angles[5] = np.maximum(self.robot_angles[5],-1.3260)
+        self.robot_angles[5] = np.minimum(self.robot_angles[5], 0.3140)
+
+        self.robot_angles[6] = np.maximum(self.robot_angles[6],-2.0850)
+        self.robot_angles[6] = np.minimum(self.robot_angles[6], 2.0850)
+
+        self.robot_angles[7] = np.maximum(self.robot_angles[7],0.0340)
+        self.robot_angles[7] = np.minimum(self.robot_angles[7],1.5440)
 
     def transmit_robot_angles(self):
         pNames = ['LShoulderPitch', 'LShoulderRoll', 'LElbowYaw', 'LElbowRoll',
