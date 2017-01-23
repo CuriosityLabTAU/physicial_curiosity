@@ -4,12 +4,12 @@ from naoqi import ALProxy
 import time
 
 def intro(subject_id):
-    robotIP = '192.168.0.100'
-    port = 9559
-    tts = ALProxy("ALTextToSpeech", robotIP, port)
-    tts.say("Hello, let me wake up")
-    time.sleep(15)
-    tts.say("lest start")
+    # robotIP = '192.168.0.104'
+    # port = 9559
+    # tts = ALProxy("ALTextToSpeech", robotIP, port)
+    # tts.say("Hello, let me wake up")
+    # time.sleep(0)
+    # tts.say("lest start")
     start_working(subject_id)
     time.sleep(60)
 

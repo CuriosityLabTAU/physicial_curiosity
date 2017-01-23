@@ -8,7 +8,7 @@ import time
 
 class NaoNode():
     def __init__(self):
-        self.robotIP = '192.168.0.100'
+        self.robotIP = '192.168.0.104'
         self.port = 9559
 
         try:
@@ -39,12 +39,12 @@ class NaoNode():
         info = data_str.split(';')
         pNames = info[0].split(',')
         pTargetAngles = [float(x) for x in info[1].split(',')]
-        print pTargetAngles
+        # print pTargetAngles
         # pTargetAngles = [ x * almath.TO_RAD for x in pTargetAngles]             # Convert to radians
 
         pMaxSpeedFraction = float(info[2])
 
-        print(pNames, pTargetAngles, pMaxSpeedFraction)
+        # print(pNames, pTargetAngles, pMaxSpeedFraction)
         while time.gmtime()[5]%2 == 0:
             self.motionProxy.angleInterpolationWithSpeed(pNames, pTargetAngles, pMaxSpeedFraction)
 

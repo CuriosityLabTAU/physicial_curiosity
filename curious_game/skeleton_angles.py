@@ -47,7 +47,12 @@ class SkeletonAngles():
         self.positions["left_hip"]['y']+self.positions["right_hip"]['y'],
         self.positions["left_hip"]['z']+self.positions["right_hip"]['z']])/2
 
-        y_0= mid_shoulder-mid_hip
+        torso=np.array([self.positions["torso"]['x'],
+        self.positions["torso"]['y'],
+        self.positions["torso"]['z']])
+
+
+        y_0= mid_shoulder-torso
         y_0= y_0/np.linalg.norm(y_0)
 
         #z_0
@@ -60,7 +65,7 @@ class SkeletonAngles():
         z_l2=z_l2/np.linalg.norm(z_l2)
 
         psil1= np.arcsin(np.dot(x_0,z_l2))
-        thtl1= np.arccos(np.dot(z_0,z_l2)/np.cos(psil1))
+        thtl1= np.arcsin(-np.dot(y_0,z_l2)/np.cos(psil1))
 
         #z_r2
         z_r2=np.array([self.positions["right_elbow"]['x']-self.positions["right_shoulder"]['x'],
@@ -69,7 +74,7 @@ class SkeletonAngles():
         z_r2=z_r2/np.linalg.norm(z_r2)
 
         psir1= np.arcsin(np.dot(x_0,z_r2))
-        thtr1= np.arccos(np.dot(z_0,z_r2)/np.cos(psir1))
+        thtr1= np.arcsin(-np.dot(y_0,z_r2)/np.cos(psir1))
 
         #y_l2
         y_l2= np.dot(np.dot(self.rot_y(psil1) ,self.rot_x(thtl1)),y_0)
@@ -83,9 +88,16 @@ class SkeletonAngles():
         self.positions["left_hand"]['z']-self.positions["left_elbow"]['z']])
         z_l4 = z_l4/np.linalg.norm(z_l4)
 
-        omega_l=np.arccos(np.dot(z_l2,z_l4)) #LElbowRoll
-        eta_l=np.arccos(np.dot(-z_l4,x_l2)/np.sin(omega_l)) #LElbowYaw
-        omega_l=-np.arccos(np.dot(z_l2,z_l4)) #LElbowRoll
+        z_l4_2=np.array([np.dot(z_l4,x_l2),np.dot(z_l4,y_l2),np.dot(z_l4,z_l2)])
+
+        eta_l= np.arctan2(z_l4_2[0],z_l4_2[1])
+        omega_l=-np.arccos(z_l4_2[2])
+        print omega_l
+
+
+        # omega_l=np.arccos(np.dot(z_l2,z_l4)) #LElbowRoll
+        # eta_l=np.arcsin(np.dot(z_l4,y_l2)/np.sin(omega_l)) #LElbowYaw
+        # omega_l=-np.arccos(np.dot(z_l2,z_l4)) #LElbowRoll
 
         # print 'omega_l',omega_l,'eta_l',eta_l
         # print "psir1",psir1*60,"thtr1",thtr1*60
@@ -96,8 +108,8 @@ class SkeletonAngles():
 
         self.skeleton_angles[0]=thtl1
         self.skeleton_angles[1]=psil1
-        # self.skeleton_angles[2]=eta_l
-        # self.skeleton_angles[3]=omega_l
+        self.skeleton_angles[2]=eta_l
+        self.skeleton_angles[3]=omega_l
 
         # takes right_shoulder, right_elbow, right_hand --> 4 angles
         # self.skeleton_angles[4:8] = np.zeros([4])
