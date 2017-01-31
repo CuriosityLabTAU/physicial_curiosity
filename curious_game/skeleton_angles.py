@@ -92,7 +92,7 @@ class SkeletonAngles():
 
         eta_l= np.arctan2(z_l4_2[0],z_l4_2[1])
         omega_l=-np.arccos(z_l4_2[2])
-        print omega_l
+        # print omega_l
 
 
         # omega_l=np.arccos(np.dot(z_l2,z_l4)) #LElbowRoll
@@ -121,6 +121,7 @@ class SkeletonAngles():
         for s in self.skeleton_angles:
             pub_str += str(s) + ','
         self.pub.publish(pub_str[:-1])
+        print('====== skeleton_angles ====== published: ', pub_str[:-1])
 
 
 

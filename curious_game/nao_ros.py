@@ -8,7 +8,7 @@ import time
 
 class NaoNode():
     def __init__(self):
-        self.robotIP = '192.168.0.104'
+        self.robotIP = '192.168.0.102'
         self.port = 9559
 
         try:
@@ -25,6 +25,9 @@ class NaoNode():
         self.motionProxy.setStiffnesses("Body", 1.0)
         self.postureProxy.goToPosture("StandInit", 0.5)
         # self.motionProxy.rest()
+
+        self.communicating = False
+        self.log = rospy.Publisher ('experiment_log', String)
 
 
     def start(self):
@@ -44,9 +47,15 @@ class NaoNode():
 
         pMaxSpeedFraction = float(info[2])
 
+        # if not self.communicating:
+        self.communicating = True
         # print(pNames, pTargetAngles, pMaxSpeedFraction)
+        time.sleep(0.5)
         while time.gmtime()[5]%2 == 0:
-            self.motionProxy.angleInterpolationWithSpeed(pNames, pTargetAngles, pMaxSpeedFraction)
+            self.motionProxy.post.angleInterpolationWithSpeed(pNames, pTargetAngles, pMaxSpeedFraction)
+            print(' #################### nao_ros ################### moved robot')
+            self.log.publish('moved robot')
+            self.communicating = False
 
 
 nao = NaoNode()
