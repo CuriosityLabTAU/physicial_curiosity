@@ -8,7 +8,7 @@ import time
 
 class NaoNode():
     def __init__(self):
-        self.robotIP = '192.168.0.104'
+        self.robotIP = '192.168.0.101'
         self.port = 9559
 
         try:
@@ -27,8 +27,10 @@ class NaoNode():
         # self.motionProxy.rest()
 
         self.communicating = False
-        self.log = rospy.Publisher ('experiment_log', String)
+        self.log = rospy.Publisher('experiment_log', String)
+        self.nao_movements = rospy.Publisher ('nao_movements', String)
 
+        self.counter=0
 
     def start(self):
         #init a listener to kinect and
@@ -37,26 +39,47 @@ class NaoNode():
         rospy.spin()
 
     def callback(self, data):
-        # data = 'name1, name2;target1, target2;pMaxSpeedFraction'
-        data_str = data.data
-        info = data_str.split(';')
-        pNames = info[0].split(',')
-        pTargetAngles = [float(x) for x in info[1].split(',')]
-        # print pTargetAngles
-        # pTargetAngles = [ x * almath.TO_RAD for x in pTargetAngles]             # Convert to radians
+        if not self.communicating:
+            if self.counter%15==0:
+                self.communicating = True
 
-        pMaxSpeedFraction = float(info[2])
+                # data = 'name1, name2;target1, target2;pMaxSpeedFraction'
+                data_str = data.data
+                info = data_str.split(';')
+                pNames = info[0].split(',')
+                pTargetAngles = [float(x) for x in info[1].split(',')]
+                # print motionProxy.rest()pTargetAngles
 
-        # if not self.communicating:
-        self.communicating = True
-        # print(pNames, pTargetAngles, pMaxSpeedFraction)
-        time.sleep(0.5)
-        self.motionProxy.setCollisionProtectionEnabled('Arms', True)
-        while time.gmtime()[5]%2 == 0:
-            self.motionProxy.post.angleInterpolationWithSpeed(pNames, pTargetAngles, pMaxSpeedFraction)
-            print(' #################### nao_ros ################### moved robot')
-            # self.log.publish('moved robot')
-            self.communicating = False
+                pMaxSpeedFraction = float(info[2])
+                # print(pNames, pTargetAngles, pMaxSpeedFraction)
+                # self.motionProxy.post.angleInterpolationWithSpeed(pNames, pTargetAngles, pMaxSpeedFraction)
+                self.motionProxy.angleInterpolationWithSpeed(pNames, pTargetAngles, pMaxSpeedFraction)
+                print(' #################### nao_ros ################### moved robot')
+                self.nao_movements.publish(data_str)
+                # time.sleep(0.5)
+                self.communicating = False
+
+            self.counter+=1
+
+
+
+    # def callback(self, data):
+    #     # data = 'name1, name2;target1, target2;pMaxSpeedFraction'
+    #     data_str = data.data
+    #     info = data_str.split(';')
+    #     pNames = info[0].split(',')
+    #     pTargetAngles = [float(x) for x in info[1].split(',')]
+    #     # print pTargetAngles
+    #     # pTargetAngles = [ x * almath.TO_RAD for x in pTargetAngles]             # Convert to radians
+    #
+    #     pMaxSpeedFraction = float(info[2])
+    #
+    #     self.communicating = True
+    #     self.motionProxy.setCollisionProtectionEnabled('Arms', True)
+    #     while time.gmtime()[5]%2 == 0:
+    #         self.motionProxy.post.angleInterpolationWithSpeed(pNames, pTargetAngles, pMaxSpeedFraction)
+    #         print(' #################### nao_ros ################### moved robot')
+    #         self.communicating = False
 
 
 nao = NaoNode()

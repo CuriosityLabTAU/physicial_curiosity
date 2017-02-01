@@ -43,7 +43,6 @@ class AngleMatrix:
     def calculate_robot_angles(self):
         self.robot_angles = np.dot(self.matrix, self.skeleton_angles)
         # safety!
-        # Matan: take angles from website. don't allow more than max-2 degrees.
         self.robot_angles[0] = np.maximum(self.robot_angles[0],-2.0850)
         self.robot_angles[0] = np.minimum(self.robot_angles[0], 2.0850)
 
@@ -82,7 +81,7 @@ class AngleMatrix:
         robot_str = robot_str[:-1] + ';'
         robot_str += '0.2'
         self.pub.publish(robot_str)
-        print('*************** angle_matrix ************ published: ', robot_str)
+        # print('*************** angle_matrix ************ published: ', robot_str)
 
 
 angle_matrix = AngleMatrix()
