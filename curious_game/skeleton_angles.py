@@ -97,7 +97,7 @@ class SkeletonAngles():
         # z_4_z_3=np.dot(z_l4,z_3l)
         # omega_l=np.arctan2(z_4_x_3_l,z_4_z_3)
         omega_l=-np.arccos(np.dot(z_l2,z_l4))
-        print 'thtl1',thtl1,'psil1',psil1,'phi_l', phi_l,'omega_l', omega_l
+        # print 'thtl1',thtl1,'psil1',psil1,'phi_l', phi_l,'omega_l', omega_l
 
 
         # psil1= np.arcsin(np.dot(x_0,z_l2))

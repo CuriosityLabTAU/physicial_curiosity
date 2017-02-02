@@ -79,7 +79,7 @@ class AngleMatrix:
         for ang in self.robot_angles:
             robot_str += str(ang) + ','
         robot_str = robot_str[:-1] + ';'
-        robot_str += '0.2'
+        robot_str += '0.4'
         self.pub.publish(robot_str)
         # print('*************** angle_matrix ************ published: ', robot_str)
 

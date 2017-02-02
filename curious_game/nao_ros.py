@@ -4,11 +4,12 @@ from naoqi import ALProxy
 import sys
 import almath
 import time
+import datetime
 
 
 class NaoNode():
     def __init__(self):
-        self.robotIP = '192.168.0.101'
+        self.robotIP = '192.168.0.100'
         self.port = 9559
 
         try:
@@ -39,6 +40,7 @@ class NaoNode():
         rospy.spin()
 
     def callback(self, data):
+        print('got message')
         if not self.communicating:
             if self.counter%15==0:
                 self.communicating = True
@@ -53,8 +55,11 @@ class NaoNode():
                 pMaxSpeedFraction = float(info[2])
                 # print(pNames, pTargetAngles, pMaxSpeedFraction)
                 # self.motionProxy.post.angleInterpolationWithSpeed(pNames, pTargetAngles, pMaxSpeedFraction)
-                self.motionProxy.angleInterpolationWithSpeed(pNames, pTargetAngles, pMaxSpeedFraction)
-                print(' #################### nao_ros ################### moved robot')
+                print('---------------------------------------------------')
+                print(datetime.datetime.now())
+                self.motionProxy.post.angleInterpolationWithSpeed(pNames, pTargetAngles, pMaxSpeedFraction)
+                print(datetime.datetime.now())
+                print(self.counter, ' #################### nao_ros ################### moved robot')
                 self.nao_movements.publish(data_str)
                 # time.sleep(0.5)
                 self.communicating = False
