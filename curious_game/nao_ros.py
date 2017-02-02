@@ -25,11 +25,12 @@ class NaoNode():
         self.robotConfig = self.motionProxy.getRobotConfig()
         self.motionProxy.setStiffnesses("Body", 1.0)
         self.postureProxy.goToPosture("StandInit", 0.5)
+        self.motionProxy.setCollisionProtectionEnabled('Arms', True)
         # self.motionProxy.rest()
 
         self.communicating = False
-        self.log = rospy.Publisher('experiment_log', String)
         self.nao_movements = rospy.Publisher ('nao_movements', String)
+        self.robot_running = True
 
         self.counter=0
 
@@ -37,11 +38,17 @@ class NaoNode():
         #init a listener to kinect and
         rospy.init_node('nao_listener')
         rospy.Subscriber('nao_commands', String, self.callback)
+        rospy.Subscriber("the_flow", String, self.the_end)
         rospy.spin()
+
+    def the_end(self, data):
+        if 'the end' in data.data:
+            self.motionProxy.rest()
+            self.robot_running = False
 
     def callback(self, data):
         print('got message')
-        if not self.communicating:
+        if not self.communicating and self.robot_running:
             if self.counter%15==0:
                 self.communicating = True
 

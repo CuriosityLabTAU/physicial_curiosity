@@ -179,16 +179,16 @@ class SkeletonAngles():
 
         self.skeleton_angles[0]=thtl1
         self.skeleton_angles[1]=psil1
-        self.skeleton_angles[2]=phi_l
-        self.skeleton_angles[3]=omega_l
+        # self.skeleton_angles[2]=phi_l
+        # self.skeleton_angles[3]=omega_l
 
         # takes right_shoulder, right_elbow, right_hand --> 4 angles
         # self.skeleton_angles[4:8] = np.zeros([4])
 
         self.skeleton_angles[4]=thtr1
         self.skeleton_angles[5]=psir1
-        self.skeleton_angles[6]=phi_r
-        self.skeleton_angles[7]=omega_r
+        # self.skeleton_angles[6]=phi_r
+        # self.skeleton_angles[7]=omega_r
 
         pub_str = ''
         for s in self.skeleton_angles:
