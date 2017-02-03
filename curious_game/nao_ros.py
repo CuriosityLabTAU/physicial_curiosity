@@ -26,6 +26,8 @@ class NaoNode():
         self.motionProxy.setStiffnesses("Body", 1.0)
         self.postureProxy.goToPosture("StandInit", 0.5)
         self.motionProxy.setCollisionProtectionEnabled('Arms', True)
+        self.motionProxy.post.angleInterpolationWithSpeed(['HeadPitch'], [-0.5], 0.2)
+
         # self.motionProxy.rest()
 
         self.communicating = False

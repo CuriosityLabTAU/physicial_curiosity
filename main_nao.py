@@ -5,6 +5,7 @@ import time
 
 def intro(subject_id):
     start_working(subject_id)
+
     time.sleep(60)
 
 
@@ -13,7 +14,7 @@ def start_working(subject_id):
     subject_id = subject_id
 
     def worker1():
-        os.system('roslaunch my_skeleton_markers markers.launch')
+        os.system('roslaunch skeleton_markers markers.launch')
         return
 
     def worker2():
@@ -33,6 +34,12 @@ def start_working(subject_id):
     def worker6():
         os.system('python curious_game/experiment.py '+subject_id)
 
+    def worker7():
+        os.system('python curious_game/nao_camera_ros.py')
+
+    def worker8():
+        os.system('roslaunch multi_camera_affdex multi_camera_affdex.launch')
+
 
     t1 = threading.Thread(target=worker1)
     t1.start()
@@ -51,7 +58,11 @@ def start_working(subject_id):
     threading._sleep(0.2)
     t6 = threading.Thread(target=worker6)
     t6.start()
+    threading._sleep(0.2)
+    t7 = threading.Thread(target=worker7)
+    t7.start()
+    threading._sleep(0.2)
+    t8 = threading.Thread(target=worker8)
+    t8.start()
 
-
-
-intro("1")
+intro("2")
