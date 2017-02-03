@@ -71,7 +71,29 @@ class Experiment(Tkinter.Tk):
             else:
                 self.set_matrix('LShoulderRoll-RShoulderPitch')
             self.start()
+            time.sleep(30)
+            self.stop()
             self.state = 3
+        elif self.state == 3:  # the tasks
+            which_matrix = int(self.subject_id) % 2
+            if which_matrix == 0:
+                self.set_matrix('LShoulderPitch-RShoulderRoll')
+            else:
+                self.set_matrix('LShoulderRoll-RShoulderPitch')
+            self.start()
+            time.sleep(30)
+            self.stop()
+            self.state = 4
+        elif self.state == 4:  # the tasks
+            which_matrix = int(self.subject_id) % 2
+            if which_matrix == 0:
+                self.set_matrix('LShoulderPitch-RShoulderRoll')
+            else:
+                self.set_matrix('LShoulderRoll-RShoulderPitch')
+            self.start()
+            time.sleep(30)
+            self.stop()
+            self.state = 5
 
     def the_end(self):
         self.stop()
