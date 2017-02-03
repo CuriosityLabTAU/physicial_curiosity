@@ -50,9 +50,6 @@ def start_working(subject_id):
     t3 = threading.Thread(target=worker3)
     t3.start()
     threading._sleep(0.2)
-    t4 = threading.Thread(target=worker4)
-    t4.start()
-    threading._sleep(0.2)
     t5 = threading.Thread(target=worker5)
     t5.start()
     threading._sleep(0.2)
@@ -64,5 +61,8 @@ def start_working(subject_id):
     threading._sleep(0.2)
     t8 = threading.Thread(target=worker8)
     t8.start()
+    threading._sleep(0.2)
+    t4 = threading.Thread(target=worker4)
+    t4.start()
 
 intro("2")
