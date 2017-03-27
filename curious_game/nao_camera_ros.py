@@ -18,7 +18,7 @@ import numpy as np
 class image_converter:
 
     def __init__(self):
-        self.robotIP = '192.168.0.100'
+        self.robotIP = '192.168.0.104'
         self.port = 9559
 
         self.image_pub = rospy.Publisher("/cam0//usb_cam/image_raw", msg.Image)

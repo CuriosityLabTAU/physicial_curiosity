@@ -9,7 +9,7 @@ import datetime
 
 class NaoNode():
     def __init__(self):
-        self.robotIP = '192.168.0.100'
+        self.robotIP = '192.168.0.104'
         self.port = 9559
 
         try:
